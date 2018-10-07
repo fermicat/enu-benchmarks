@@ -17,6 +17,12 @@ a:hover {
 .blockquote-footer {
     color: #484e54;
 }
+div.filters {
+    width: 100%;    
+    text-align: left;
+    padding: 7px 5px;
+    font-size: 1.0rem;
+}
 
 h1::before {
     width: 0.85em;
@@ -27,12 +33,14 @@ h1::before {
     margin-right: 10px;
   }
   
-  h1 {
+h1 {
     font-family: verdana;
     padding: 10px 0px 0px 0px;
   }
 
-
+  #chart-cpu {
+    min-height: 650px;
+}
 
 header {
     text-align: right;
