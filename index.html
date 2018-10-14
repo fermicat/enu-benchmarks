@@ -16,10 +16,10 @@
     <!-- Header bar -->
     <header>
         <ul place="header">
-            <li place="header" style="float:left;"><a href="/" target="_blank">enubifreedom</a></li>
+            <li place="header" style="float:left;"><a href="http://enubi.org" target="_blank">
+                <img class="logo" width="80" src="http://enubi.org/images/logo.png" title="enubifreedom">
+            </a></li>
             <li place="header"><a href="/">Home</a></li>
-            <li place="header"><a href="#contact">Contact</a></li>
-            <li place="header"><a href="#research">Research</a></li>
         </ul>
     </header>
     <br />
@@ -49,15 +49,13 @@
                 <br />
                 This smart contracts is initially a EOS contracts by
                 <a href="http://eosmechanics.com/" target="_blank">EOS Mechanics</a> research group.
-                <br />
-
                 The <code>enubifreelab</code>, supported by Enumivo community and
                 <a href="/" , target="_blank">enubifreedom BP</a>, ported and ajusted for Enumivo blockchain.
                 For more details, please visit
                 <a href="https://github.com/quantumcatwang/enu-benchmarks" target="_blank">our github</a>.
                 <br />
                 For the original contract on the blockchain, check:
-                <a href="https://wallet.enumivo.com/transactions/8545b8625c105fb971a58454ce1687dceeb24d8473d7db77ef16a1d32fbe1af6"
+                <a href="http://enumivo.qsx.io/transactions/8545b8625c105fb971a58454ce1687dceeb24d8473d7db77ef16a1d32fbe1af6"
                     target="_blank">
                     tx:enubifreelab
                 </a>
@@ -68,10 +66,28 @@
 
         <div class="container-fluid text-center" ng-controller="benchmarksChart">
             <div class="row" ng-init="init()">
+                
+                <div class="col-12">
+                    <div class="filters">
+                        <div class="form-check form-check-inline">
+<!--                            <label class="form-check-label">
+                                <i class="far fa-cog" style="margin-right: 5px"></i> Network:</label>
+                            <select class="form-control form-control-sm" ng-model="networkId" 
+                                ng-options="network.id as network.name for (key, network) in networks"
+                                ng-change="setUrlParams()"></select>-->
 
+                            <label class="form-check-label"> Time Frame:</label>
+                            <select class="form-control form-control-sm" ng-model="timeframeId" 
+                                ng-options="timeframe.id as timeframe.name for (key, timeframe) in timeframes"
+                                ng-change="setUrlParams()"></select>
+
+                            <a href="" ng-click="updateCharts()">Refresh</a>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-12">
-                    <div id="chart-cpu">A</div>
+                    <div id="chart-cpu"></div>
                 </div>
             </div>
         </div>
@@ -80,6 +96,7 @@
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+        <script src="js/benchmark.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </div>
 </body>
