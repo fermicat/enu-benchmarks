@@ -32,11 +32,13 @@ app.controller('benchmarksChart', ['$scope', '$location', 'benchmarksService', f
             $scope.processUrlParams();
         });
         
-        // Get time frames
+        // Get time frames 
+        /*
         benchmarksService.getTimeframes(function(response) {
             $scope.timeframes = response.data.timeframes;
             $scope.processUrlParams();
         });
+        */
         
         // Watch for url changes
         $scope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl) {
@@ -147,55 +149,40 @@ app.controller('benchmarksChart', ['$scope', '$location', 'benchmarksService', f
         
         benchmarksService.getData(params, function(response) {
             // CPU line
-            $scope.chartCpu = Highcharts.chart('chart-cpu', {
-                chart: { type: 'spline', zoomType: 'x', },
-                title: { text: '' },
-                yAxis: { title: { text: '<span style="font-size: 0.9rem">Exec. time (ms)</span>' } },
-                xAxis: { type: 'datetime', title: 'Time' },
-                plotOptions: { spline: { marker: {enabled: true} } },
-                credits: { enabled: false },
-                series: response.data.cpu,
-                time: { useUTC: true },
-                legend: { itemStyle: {fontSize: "14px"} },
-            });
-
-            // CPU box plot
-            /*
-            let cats = [];
-            for (let i in response.data.cpuBox) {
-                cats.push(response.data.cpuBox[i][0]);
+            // Update existing chart
+            if ($scope.chartCpu !== undefined) {
+                let visibleStates = {};
+                while($scope.chartCpu.series.length > 0) {
+                    // Save state of series visibility so we can restore it
+                    visibleStates[$scope.chartCpu.series[0].name] = $scope.chartCpu.series[0].visible;
+                    $scope.chartCpu.series[0].remove(false);
+                }
+                for (let i in response.data.cpu) {
+                    $scope.chartCpu.addSeries(response.data.cpu[i], false);
+                    
+                    // If it was previously hidden, hide it again
+                    let name = response.data.cpu[i].name;
+                    if (visibleStates[name] === false) {
+                        //$scope.chartCpu.series[i].hide();
+                        $scope.chartCpu.series[i].setVisible(false, false);
+                    }
+                }
+                $scope.chartCpu.redraw();
+            // Create new chart
+            } else {
+                $scope.chartCpu = Highcharts.chart('chart-cpu', {
+                    chart: { type: 'spline', zoomType: 'x', },
+                    title: { text: '' },
+                    yAxis: { title: { text: '<span style="font-size: 0.9rem">Exec. time (ms)</span>' } },
+                    xAxis: { type: 'datetime', title: 'Time' },
+                    plotOptions: { spline: { marker: {enabled: true} } },
+                    credits: { enabled: false },
+                    series: response.data.cpu,
+                    time: { useUTC: true },
+                    legend: { itemStyle: {fontSize: "14px"} },
+                });
             }
-            $scope.chartCpu2 = Highcharts.chart('chart-cpu-box', {
-                chart: { type: 'boxplot' },
-                title: { text: '' },
-                yAxis: { title: { text: '<span style="font-size: 0.9rem">Exec. time (ms)</span>' } },
-                xAxis: { categories: cats, labels: { style: { fontSize: '13px', color: '#000000' } } },
-                //xAxis: { type: 'datetime', title: 'Time' },
-                //plotOptions: { spline: { marker: {enabled: true} } },
-                credits: { enabled: false },
-                series: [{
-                    name: 'exec time (ms)',
-                    data: response.data.cpuBox,
-                    showInLegend: false,
-                    colorByPoint: true,
-                    lineWidth: 2, 
-                }],
-                time: { useUTC: true },
-            });     
-            */
 
-            // RAM
-            /* $scope.chartRam = Highcharts.chart('chart-ram', {
-                chart: { type: 'spline', zoomType: 'x', },
-                title: { text: '' },
-                yAxis: { title: { text: 'Milliseconds' } },
-                xAxis: { type: 'datetime', title: 'Time' },
-                plotOptions: { spline: { marker: {enabled: true} } },
-                credits: { enabled: false },
-                series: response.data.ram,
-                time: { useUTC: true },
-                legend: { itemStyle: {fontSize: "14px"} },
-            }); */
         }, function (response) {
             console.log('error');
             console.log(response);

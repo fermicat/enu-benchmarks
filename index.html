@@ -70,7 +70,8 @@
                 <div class="col-12">
                     <div class="filters">
                         <div class="form-check form-check-inline">
-<!--                            <label class="form-check-label">
+                            <!--
+                            <label class="form-check-label">
                                 <i class="far fa-cog" style="margin-right: 5px"></i> Network:</label>
                             <select class="form-control form-control-sm" ng-model="networkId" 
                                 ng-options="network.id as network.name for (key, network) in networks"
@@ -79,7 +80,20 @@
                             <label class="form-check-label"> Time Frame:</label>
                             <select class="form-control form-control-sm" ng-model="timeframeId" 
                                 ng-options="timeframe.id as timeframe.name for (key, timeframe) in timeframes"
-                                ng-change="setUrlParams()"></select>
+                                ng-change="setUrlParams()">
+                                <!--
+                                <option label="3 Hours" value="number:1">3 Hours</option>
+                                <option label="6 Hours" value="number:2" selected="selected">6 Hours</option>
+                                <option label="12 Hours" value="number:3">12 Hours</option>
+                                <option label="1 Day" value="number:4">1 Day</option>
+                                <option label="3 Days" value="number:5">3 Days</option>
+                                <option label="7 Days" value="number:6">7 Days</option>
+                                <option label="14 Days" value="number:7">14 Days</option>
+                                <option label="30 Days" value="number:8">30 Days</option>
+                                <option label="60 Days" value="number:9">60 Days</option>
+                                <option label="90 Days" value="number:10">90 Days</option>
+                                <option label="All Time" value="number:11">All Time</option>-->
+                            </select>
 
                             <a href="" ng-click="updateCharts()">Refresh</a>
                         </div>
@@ -96,7 +110,11 @@
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+        <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/benchmark.js"></script>
+        <script src="js/benchmarksChart.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/highcharts-more.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </div>
 </body>
